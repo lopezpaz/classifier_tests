@@ -624,15 +624,56 @@ $^1$Facebook AI Research, $^2$WILLOW project team, Inria / ENS / CNRS\\
   large set of generated samples would reveal such memorization to the two-sample test. This
   is because some unique samples would appear multiple times in the set of generated samples,
   but not in the test-set of samples.}
-  As a general recipe, prefer generative models that achieve the \emph{same and small} two-sample
+  As a general recipe, prefer \emph{the smallest} (in number of parameters) generative model that achieve the \emph{same and small} two-sample
   test statistic when comparing their generated samples to both the train-set and test-set samples.
+  
+  We have seen that GANs of different quality may lead to the same
+  (perfect) C2ST statistic.  To allow a finer comparison between generative
+  models, we recommend implementing C2ST using a margin classifier with
+  finite norm, or using as statistic the whole area under the C2ST
+  training curve (on train-set or test-set samples).
   \end{remark}
 
   \subsection{Experiments on Interpretability}
 
+  \begin{figure}
+    \begin{center}
+    \begin{subfigure}{0.26\textwidth}
+      \includegraphics[width=\textwidth]{figures/interpret_1.pdf}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.26\textwidth}
+      \includegraphics[width=\textwidth]{figures/interpret_2.pdf}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.26\textwidth}
+      \raisebox{0.07\height}{\includegraphics[width=\textwidth]{figures/interpret_all.jpg}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.18\textwidth}
+      \includegraphics[width=0.32\textwidth]{figures/AM05HAS.JPG}%
+      \includegraphics[width=0.32\textwidth]{figures/AM05NES.JPG}%
+      \includegraphics[width=0.32\textwidth]{figures/AM05SUS.JPG}\\
+      \includegraphics[width=0.32\textwidth]{figures/AM05AFS.JPG}%
+      \includegraphics[width=0.32\textwidth]{figures/AM05ANS.JPG}%
+      \includegraphics[width=0.32\textwidth]{figures/AM05DIS.JPG}\\
+      \includegraphics[width=0.32\textwidth]{figures/faces_diff_happy.jpg}%
+      \includegraphics[width=0.32\textwidth]{figures/faces_diff_angry.jpg}%
+      \includegraphics[width=0.32\textwidth]{figures/faces_diff_diff.jpg}
+    \end{subfigure}
+    \end{center}
+    \vspace{-0.2cm}
+    \caption{Interpretability of C2ST. The color map corresponds to the value of $p(l=1|z)$.}
+    \vspace{-0.2cm}
+    \label{fig:interpretability}
+  \end{figure}
+
   We illustrate the interpretability power of C2ST.
   First, the predictive uncertainty of C2ST sheds light on
-  where the two samples under consideration agree or differ. In the first plot
+  where the two samples under consideration agree or differ.
+  In the context of GANs, this interpretability is useful to locate captured or dropped modes. 
+  % 
+  In the first plot
   of Figure~\ref{fig:interpretability}, a C2ST-NN separates two bivariate
   Gaussian
   distributions with different means. When performing this separation, the
@@ -670,38 +711,6 @@ $^1$Facebook AI Research, $^2$WILLOW project team, Inria / ENS / CNRS\\
   the ``Bayesian inference'' category are those associated to the words
   \emph{infer}, \emph{markov}, \emph{graphic}, \emph{conjug}, \emph{carlo},
   \emph{automat}, \emph{laplac}.
-
-  \begin{figure}
-    \begin{center}
-    \begin{subfigure}{0.26\textwidth}
-      \includegraphics[width=\textwidth]{figures/interpret_1.pdf}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.26\textwidth}
-      \includegraphics[width=\textwidth]{figures/interpret_2.pdf}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.26\textwidth}
-      \raisebox{0.07\height}{\includegraphics[width=\textwidth]{figures/interpret_all.jpg}}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.18\textwidth}
-      \includegraphics[width=0.32\textwidth]{figures/AM05HAS.JPG}%
-      \includegraphics[width=0.32\textwidth]{figures/AM05NES.JPG}%
-      \includegraphics[width=0.32\textwidth]{figures/AM05SUS.JPG}\\
-      \includegraphics[width=0.32\textwidth]{figures/AM05AFS.JPG}%
-      \includegraphics[width=0.32\textwidth]{figures/AM05ANS.JPG}%
-      \includegraphics[width=0.32\textwidth]{figures/AM05DIS.JPG}\\
-      \includegraphics[width=0.32\textwidth]{figures/faces_diff_happy.jpg}%
-      \includegraphics[width=0.32\textwidth]{figures/faces_diff_angry.jpg}%
-      \includegraphics[width=0.32\textwidth]{figures/faces_diff_diff.jpg}
-    \end{subfigure}
-    \end{center}
-    \vspace{-0.2cm}
-    \caption{Interpretability of C2ST. The color map corresponds to the value of $p(l=1|z)$.}
-    \vspace{-0.2cm}
-    \label{fig:interpretability}
-  \end{figure}
 
   \section{Experiments on Conditional GANs for Causal Discovery}\label{sec:causality}
 
